@@ -116,7 +116,12 @@ val mergeDF1 = mergeDF.select($"k11", myUdf($"k11",$"k12",$"k21"，$"k22"))
 mergeDF1.show(100)
 
 
+//注册自定义函数
+spark.udf.register("add_one", add_one _)
 
+//使用自定义函数
+import org.apache.spark.sql.functions._
+mergeDF.withColumn("a2", callUDF("add_one", col("k11"))).show(100)
 
 
 
